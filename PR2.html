@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 PR HERO - WELCOME TO PR FAMILY </title>
+    <!-- html2canvas library for certificate generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .game-container {
+            max-width: 720px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 48px;
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cbd5e1;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 24px;
+        }
+
+        .level-badge {
+            background: #3b82f6;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: white;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .score-badge {
+            background: #1e293b;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #facc15;
+            border: 1px solid #facc1540;
+        }
+
+        .player-name-badge {
+            background: #1e293b;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #60a5fa;
+            border: 1px solid #3b82f640;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #1e293b;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 20px;
+            transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .welcome-screen h1 {
+            font-size: 2.8rem;
+            color: white;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .welcome-screen .subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .welcome-screen .emoji-big {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .name-input-large {
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 60px;
+            padding: 18px 28px;
+            width: 100%;
+            font-size: 1.3rem;
+            color: white;
+            margin: 16px 0 12px;
+            outline: none;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+        .name-input-large:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 30px #3b82f640;
+        }
+
+        .name-input-large::placeholder {
+            color: #64748b;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 60px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 30px -6px #3b82f680;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 40px -6px #8b5cf680;
+        }
+
+        .start-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Card / Question area */
+        .question-card {
+            background: #1e293b;
+            border-radius: 28px;
+            padding: 28px 24px;
+            margin-bottom: 28px;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .scenario {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f8fafc;
+            background: #0f172a;
+            padding: 16px 20px;
+            border-radius: 18px;
+            border-left: 6px solid #3b82f6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .option-btn {
+            background: #0f172a;
+            border: 2px solid #334155;
+            color: #e2e8f0;
+            padding: 16px 20px;
+            border-radius: 18px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: #3b82f6;
+            background: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -6px #3b82f640;
+        }
+
+        .option-btn.disabled-true {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .option-btn.correct {
+            border-color: #22c55e;
+            background: #052e16;
+            box-shadow: 0 0 20px #22c55e30;
+        }
+
+        .option-btn.wrong {
+            border-color: #ef4444;
+            background: #2c0a0a;
+            box-shadow: 0 0 20px #ef444430;
+        }
+
+        .option-letter {
+            background: #334155;
+            color: white;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .option-letter {
+            background: #22c55e;
+        }
+        .option-btn.wrong .option-letter {
+            background: #ef4444;
+        }
+
+        .feedback-box {
+            margin-top: 20px;
+            padding: 16px 20px;
+            border-radius: 18px;
+            font-weight: 500;
+            display: none;
+            background: #0f172a;
+            border-left: 6px solid #94a3b8;
+        }
+
+        .feedback-box.show {
+            display: block;
+        }
+
+        .feedback-box.success {
+            border-color: #22c55e;
+            color: #86efac;
+        }
+
+        .feedback-box.error {
+            border-color: #ef4444;
+            color: #fca5a5;
+        }
+
+        .next-btn {
+            background: #3b82f6;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 16px 28px;
+            border: none;
+            border-radius: 60px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 20px -6px #3b82f680;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            background: #2563eb;
+            transform: scale(1.01);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Certificate Section */
+        .certificate-area {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 10px;
+        }
+
+        #certificateCard {
+            background: #f8fafc;
+            padding: 30px 28px;
+            border-radius: 28px;
+            width: 100%;
+            text-align: center;
+            color: #0f172a;
+            box-shadow: 0 20px 40px -10px #00000080;
+            border: 2px solid #facc15;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #certificateCard::before {
+            content: "🏅";
+            font-size: 4rem;
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+
+        .cert-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .cert-sub {
+            color: #475569;
+            font-weight: 500;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+
+        .cert-name {
+            font-size: 2.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 12px 0;
+        }
+
+        .cert-score {
+            background: #e2e8f0;
+            display: inline-block;
+            padding: 8px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #0f172a;
+            margin: 12px 0;
+        }
+
+        .cert-footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #475569;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+        }
+
+        .cert-footer span {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .download-btn {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 16px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .download-btn:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+
+        .name-input {
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 60px;
+            padding: 14px 24px;
+            width: 100%;
+            font-size: 1.2rem;
+            color: white;
+            margin: 16px 0 8px;
+            outline: none;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+        .name-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px #3b82f640;
+        }
+
+        .name-input::placeholder {
+            color: #64748b;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .flex-1 {
+            flex: 1;
+        }
+
+        .game-area-hidden {
+            display: none;
+        }
+
+        /* responsiveness */
+        @media (max-width: 500px) {
+            .game-container { padding: 20px; }
+            .question { font-size: 1rem; }
+            .cert-title { font-size: 1.6rem; }
+            .cert-name { font-size: 1.8rem; }
+            .welcome-screen h1 { font-size: 2rem; }
+        }
+        .mascot-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 100px;
+            z-index: 999;
+            cursor: pointer;
+        }
+
+        /* =========================== */
+        /* NEW POPUP STYLES ADDED HERE */
+        /* =========================== */
+        #session-popup-overlay {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.8); 
+            z-index: 99999; 
+            justify-content: center; 
+            align-items: center;
+        }
+        .popup-box {
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            max-width: 450px; 
+            width: 90%; 
+            text-align: center; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
+            position: relative;
+            animation: fadeInUp 0.4s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .popup-mascot {
+            width: 120px; 
+            margin-bottom: 15px; 
+            border-radius: 50%;
+        }
+        .popup-date-box {
+            background: #f0f8ff; 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin: 15px 0; 
+            border: 2px dashed #2a6df4;
+        }
+        .popup-btn {
+            background: #2a6df4; 
+            color: white; 
+            padding: 12px 25px; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+        .popup-btn:hover {
+            background: #1d5ac7;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Mascot in Corner -->
+    <img src="d:\Malak SCU\YLY\Season 7\photoshop\belo.png" class="mascot-float" alt="BELO">
+
+    <!-- =========================== -->
+    <!-- NEW POPUP HTML ADDED HERE   -->
+    <!-- =========================== -->
+    <div id="session-popup-overlay">
+        <div class="popup-box">
+            <!-- Mascot Image inside Popup -->
+            <img src="d:\Malak SCU\YLY\Season 7\photoshop\belo.png" class="popup-mascot" alt="Mascot">
+            
+            <h2 style="color: #333; margin: 10px 0;">🎉 Amazing Work!</h2>
+            <p style="color: #555; font-size: 16px;"> دلوقتي معاد السيشن بتاعتنا و اول سيشن للجنتنا  <strong>متحمسين 🤩</strong>:</p>
+            
+            <!-- New Session Date and Time -->
+            <div class="popup-date-box">
+                <h3 style="margin: 0; color: #2a6df4; font-size: 20px;">📅 Friday, August 7th, 2026</h3>
+                <p style="margin: 5px 0 0; font-weight: bold; color: #333;">⏰ 5:30 PM - 8:00 PM (EST)</p>
+            </div>
+
+            <!-- Button to Show Certificate -->
+            <button class="popup-btn" onclick="closePopupShowCertificate()">
+                View My Certificate
+            </button>
+        </div>
+    </div>
+
+<div class="game-container" id="app">
+    <!-- Header -->
+    <div class="header">
+        <div class="level-badge" id="levelDisplay">🎮 WELCOME</div>
+        <div class="player-name-badge" id="playerNameBadge">👤 Player</div>
+        <div class="score-badge" id="scoreDisplay">⭐ 0 pts</div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+    </div>
+
+    <!-- WELCOME SCREEN -->
+    <div id="welcomeScreen" class="welcome-screen">
+        <div class="emoji-big">😎🤝🏻</div>
+        <h1>PR HEROS</h1>
+        <div class="subtitle">Season 8 · PR Welcome Edition</div>
+        <div style="color: #94a3b8; margin-bottom: 8px; font-size: 0.95rem;">
+            ⚡ Enter your name to begin your PR journey
+        </div>
+        <input type="text" class="name-input-large" id="welcomeNameInput" placeholder="ENTER YOUR FULL NAME" value="PR HERO">
+        <button class="start-btn" id="startGameBtn">🚀 Start Game</button>
+        <div style="margin-top: 24px; color: #64748b; font-size: 0.85rem;">
+            🏆 6 Levels · Earn  Points · Get Your Certificate
+        </div>
+    </div>
+
+    <!-- GAME AREA (hidden initially) -->
+    <div id="gameArea" class="game-area-hidden">
+        <div class="question-card">
+            <div class="scenario" id="scenarioText">Loading scenario...</div>
+            <div class="question" id="questionText">Loading question...</div>
+        </div>
+
+        <div class="options" id="optionsContainer"></div>
+
+        <div class="feedback-box" id="feedbackBox">
+            <span id="feedbackMessage">Feedback</span>
+        </div>
+
+        <button class="next-btn" id="nextBtn" disabled>Next Level ➜</button>
+    </div>
+
+    <!-- Certificate Area (hidden initially) -->
+    <div class="certificate-area" id="certificateArea">
+        <div id="certificateCard">
+            <div class="cert-title">🏆 PR HERO</div>
+            <div class="cert-sub">Season 8 ·  PR Welcome Edition</div>
+            <div style="font-size:1rem; color:#334155;">This certificate goes to</div>
+            <div class="cert-name" id="certName">[Your Name]</div>
+            <div style="font-size:1rem; color:#334155;"> For Starting Your Volunteer Journey with YLY </div>
+            <div class="cert-score" id="certScore">⭐ 0 Reputation</div>
+            <div style="display: flex; justify-content: center; gap: 24px; margin: 12px 0; font-size:0.9rem; color:#475569;">
+                <span>🧠 Level 6 Mastered</span>
+                <span>📅 Season 8</span>
+            </div>
+            <div class="cert-footer">
+                <span>#YLY_PR</span> · THIS IS THE BEGGINIG OF YOUR JOURNEY · <span id="certDate">2026</span>
+            </div>
+        </div>
+
+        <!-- Name input + download row -->
+        <div class="row" style="width:100%; margin-top: 16px;">
+            <input type="text" class="name-input flex-1" id="certNameInput" placeholder="Edit name for certificate">
+            <button class="download-btn" id="downloadBtn" style="flex: 0 0 auto; padding: 14px 24px; width: auto;">⬇️ Download</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---- GAME DATA ----
+        const levels = [
+            {
+                level: 1,
+                scenario: "📱 لو سبونسر رفضك و رد بطريقة مش كويسة",
+                question: " هتعمل ايه؟؟",
+                options: [
+                    "A. هترد عليه بنفس الطريقة.",
+                    "B. هتحتوي الموقف و تحاول تعرف الشكلة فين.",
+                    "C.   هتتجاهل انه كلمك بطريقة مش كويسة .",
+                    "D. مش هترد اصلا"
+                ],
+                correct: 1,
+                explanation: "✅ Correct!"
+            },
+            {
+                level: 2,
+                scenario: "📦 لو عملت ديل و حد كتب في الكومنتات ان المنتجات سيئة",
+                question: " هترد ازاي؟؟ ",
+                options: [
+                    "A. ترد بأحترام و تعرف من تفاصيل المشكلة و تشكره علي رأيه",
+                    "B. تمسح التعليق فورا",
+                    "C.هتتجاهلة ",
+                    "D. تدخل في جدال معاه"
+                ],
+                correct: 0,
+                explanation: "✅ Correct!"
+            },
+            {
+                level: 3,
+                scenario: "🎥 لو انتشرت اشاعة عن التيم قبل فعالية مهمة",
+                question: " هتعمل ايه؟؟  ",
+                options: [
+                    "A. تسيب الناس تتكلم",
+                    "B. تنشر بيان رسمي توضح فيه الحقيقة بالأدلة",
+                    "C. تلغي الفعالية",
+                    "D. ترد علي كل تعليق"
+                ],
+                correct: 1,
+                explanation: "✅ Correct!"
+            },
+            {
+                level: 4,
+                scenario: "📉 لو انت مسؤول العلاقات العامة و حد من التيم معاك رد بطريقة غير ملائمة علي سبونسر ",
+                question:" هتعمل ايه؟؟ ",
+                options: [
+                    "A. تتكلم معاه علي انفرادو تصلح الموقف و تتعلمو من الخطأ.",
+                    "B. تعاقبة قدام التيم .",
+                    "C. تتجاهل الموضوع",
+                    "D. ترد علي الاسبونسر بنفس الطريقة الغير الملائمة "
+                ],
+                correct: 0,
+                explanation: "✅ Correct!"
+            },
+            {
+                level: 5,
+                scenario: "🗣️ لو حصل انقطاع مفاجئ في الكهرباء ",
+                question: "هتتصرف ازاي؟؟",
+                options: [
+                    "A. هتختفي من المكان في اسرع وقت",
+                    "B. هتطمن الحضور و توضح الموقف و تبدأ تتواصل مع ادارة المكان لحل المشكلة في اسرع وقت ممكن",
+                    "C. هتلغي الايفينت فورا",
+                    "D. هتلوم المنظمين"
+                ],
+                correct: 1,
+                explanation: "✅ Correct!"
+            },
+            {
+                level: 6,
+                scenario: "🔥 لو السبيكر الرئيسي اتأخر 25 دقيقة",
+                question: "دورك هيبقى ايه؟؟",
+                options: [
+                    "A. تنهي الايفيت",
+                    "B. تشغل فقرة بديلة و تحافظ علي تفاعل الجمهور",
+                    "C. تسيب الناس تستني",
+                    "D.تخلي اي حد يقدم الفقرة  "
+                ],
+                correct: 1,
+                explanation: "✅ Correct!"
+            }
+        ];
+
+        // ---- STATE ----
+        let currentLevelIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+        let gameCompleted = false;
+        let playerName = '';
+
+        // DOM refs
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const gameArea = document.getElementById('gameArea');
+        const certificateArea = document.getElementById('certificateArea');
+        const welcomeNameInput = document.getElementById('welcomeNameInput');
+        const startBtn = document.getElementById('startGameBtn');
+        const levelDisplay = document.getElementById('levelDisplay');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const playerNameBadge = document.getElementById('playerNameBadge');
+        const progressFill = document.getElementById('progressFill');
+        const scenarioText = document.getElementById('scenarioText');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedbackBox = document.getElementById('feedbackBox');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const nextBtn = document.getElementById('nextBtn');
+        const certName = document.getElementById('certName');
+        const certScore = document.getElementById('certScore');
+        const certDate = document.getElementById('certDate');
+        const certNameInput = document.getElementById('certNameInput');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // ---- Helper functions ----
+        function updateUI() {
+            levelDisplay.textContent = `LEVEL ${currentLevelIndex+1} / ${levels.length}`;
+            scoreDisplay.textContent = `⭐ ${score} pts`;
+            playerNameBadge.textContent = `👤 ${playerName || 'Player'}`;
+
+            const progress = ((currentLevelIndex) / levels.length) * 100;
+            progressFill.style.width = `${Math.min(progress, 100)}%`;
+        }
+
+        function renderLevel() {
+            if (gameCompleted) return;
+
+            const level = levels[currentLevelIndex];
+            scenarioText.textContent = level.scenario;
+            questionText.textContent = level.question;
+
+            optionsContainer.innerHTML = '';
+            feedbackBox.classList.remove('show', 'success', 'error');
+            feedbackBox.style.display = 'none';
+            nextBtn.disabled = true;
+            isAnswered = false;
+
+            level.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.classList.add('option-btn');
+                btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + idx)}</span> ${optText.substring(3)}`;
+                btn.dataset.index = idx;
+                btn.addEventListener('click', () => handleOptionClick(idx));
+                optionsContainer.appendChild(btn);
+            });
+
+            updateUI();
+        }
+
+        function handleOptionClick(selectedIdx) {
+            if (isAnswered || gameCompleted) return;
+
+            const level = levels[currentLevelIndex];
+            const isCorrect = (selectedIdx === level.correct);
+            const buttons = optionsContainer.querySelectorAll('.option-btn');
+
+            buttons.forEach(btn => btn.disabled = true);
+
+            buttons.forEach((btn, idx) => {
+                if (idx === level.correct) {
+                    btn.classList.add('correct');
+                } else if (idx === selectedIdx && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+                btn.classList.add('disabled-true');
+            });
+
+            if (isCorrect) {
+                score += 10;
+            }
+
+            feedbackBox.style.display = 'block';
+            feedbackBox.className = 'feedback-box show';
+            if (isCorrect) {
+                feedbackBox.classList.add('success');
+            } else {
+                feedbackBox.classList.add('error');
+            }
+            feedbackMessage.textContent = level.explanation;
+
+            scoreDisplay.textContent = `⭐ ${score} pts`;
+            nextBtn.disabled = false;
+            isAnswered = true;
+        }
+
+        function goToNextLevel() {
+            if (nextBtn.disabled) return;
+
+            if (currentLevelIndex < levels.length - 1) {
+                currentLevelIndex++;
+                renderLevel();
+            } else {
+                gameCompleted = true;
+                // CHANGED: Instead of directly showing certificate, open the popup
+                document.getElementById('session-popup-overlay').style.display = "flex";
+                // Hide certificate area in case it was visible
+                certificateArea.style.display = 'none';
+            }
+        }
+
+        // ---- START GAME ----
+        function startGame() {
+            playerName = welcomeNameInput.value.trim() || 'PR Star';
+            playerNameBadge.textContent = `👤 ${playerName}`;
+            
+            welcomeScreen.style.display = 'none';
+            gameArea.classList.remove('game-area-hidden');
+            gameArea.style.display = 'block';
+            
+            currentLevelIndex = 0;
+            score = 0;
+            gameCompleted = false;
+            renderLevel();
+        }
+
+        // ---- CERTIFICATE ----
+        function showCertificate() {
+            gameArea.style.display = 'none';
+            certificateArea.style.display = 'flex';
+
+            const now = new Date();
+            certDate.textContent = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            certName.textContent = playerName;
+            certNameInput.value = playerName;
+            
+            // Calculate percentage (Max score is 60 points)
+            const maxScore = levels.length * 10; // 6 * 10 = 60
+            const percentage = Math.round((score / maxScore) * 100);
+            certScore.textContent = `⭐ ${percentage}%`;
+
+            progressFill.style.width = '100%';
+            levelDisplay.textContent = '🏁 COMPLETE!';
+        }
+
+        function updateCertificateName() {
+            const name = certNameInput.value.trim() || playerName || 'PR Star';
+            certName.textContent = name;
+        }
+
+        // ---- Download Certificate ----
+        function downloadCertificate() {
+            updateCertificateName();
+            const card = document.getElementById('certificateCard');
+            html2canvas(card, {
+                scale: 2,
+                backgroundColor: '#f8fafc',
+                allowTaint: false,
+                useCORS: true,
+                logging: false,
+            }).then((canvas) => {
+                const link = document.createElement('a');
+                link.download = `PR_Certificate_${certName.textContent.replace(/\s+/g, '_')}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                alert('Could not generate certificate. Please try using a modern browser.');
+                console.warn(err);
+            });
+        }
+
+        // ---- Event Listeners ----
+        startBtn.addEventListener('click', startGame);
+        
+        // Allow Enter key on name input
+        welcomeNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') startGame();
+        });
+
+        nextBtn.addEventListener('click', goToNextLevel);
+        certNameInput.addEventListener('input', updateCertificateName);
+        downloadBtn.addEventListener('click', downloadCertificate);
+
+        // ---- INIT ----
+        // Set default name
+        welcomeNameInput.value = '';
+        welcomeNameInput.placeholder = 'Enter your full name...';
+        
+        console.log('🎮 PR HERO  Season 8 loading! Enter your name to start.');
+    })();
+
+    // ========================================
+    // NEW POPUP JAVASCRIPT FUNCTION ADDED HERE
+    // ========================================
+    function closePopupShowCertificate() {
+        // 1. Hide the popup
+        document.getElementById('session-popup-overlay').style.display = "none";
+        
+        // 2. Get the player's name and score from the game
+        const playerNameBadge = document.getElementById('playerNameBadge');
+        const playerName = playerNameBadge.textContent.replace('👤 ', '');
+        
+        // 3. Calculate the percentage (Max is 60 points)
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const scoreText = scoreDisplay.textContent.replace('⭐ ', '').replace(' pts', '');
+        const score = parseInt(scoreText, 10);
+        const maxScore = 60; // 6 levels * 10 points each
+        const percentage = Math.round((score / maxScore) * 100);
+        
+        // 4. Update the certificate with the player's name and percentage score
+        document.getElementById('certName').textContent = playerName;
+        document.getElementById('certNameInput').value = playerName;
+        document.getElementById('certScore').textContent = `⭐ ${percentage}%`;
+        
+        // 5. Update date
+        const now = new Date();
+        document.getElementById('certDate').textContent = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        
+        // 6. Show the certificate
+        document.getElementById('gameArea').style.display = 'none';
+        document.getElementById('certificateArea').style.display = 'flex';
+        document.getElementById('progressFill').style.width = '100%';
+        document.getElementById('levelDisplay').textContent = '🏁 COMPLETE!';
+        
+        // Smooth scroll to certificate
+        setTimeout(function() {
+            document.getElementById('certificateArea').scrollIntoView({ behavior: 'smooth' });
+        }, 200);
+    }
+</script>
+</body>
+</html>
